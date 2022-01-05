@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>File Upload</title>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <!-- <script async src="{{url_for('static', filename='script.js')}}"></script> -->
+  </head>
+  <body>
+    <form
+      id="post-form"
+      action="/display"
+      method="POST"
+      enctype="multipart/form-data"
+    >
+      <div style="display: flex">
+        <div>
+          <button
+            style="display: block; width: 120px; height: 30px"
+            onclick="document.getElementById('getFile').click()"
+          >
+            Find product
+          </button>
+          <input id="getFile" type="file" name="file" style="display: none" />
+        </div>
+        <button id="btn-add" style="margin-left: 20px" type="file">Send</button>
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+      </div>
+      <br /><br />
+    </form>
+
+    <form action="/noname" method="POST" enctype="multipart/form-data">
+      <div style="display: flex">
+        <div>
+          <button
+            style="display: block; width: 120px; height: 30px"
+            onclick="document.getElementById('getFile1').click()"
+          >
+            Clean Data
+          </button>
+          <input id="getFile1" type="file" name="file" style="display: none" />
+          <!-- <button style=" margin-left: 20px;" type="submit">Send</button> -->
+        </div>
+        <button id="btn-add" style="margin-left: 20px" type="file">Send</button>
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+      </div>
+      <br /><br />
+    </form>
+    <form action="/noname" method="POST" enctype="multipart/form">
+      <div style="display: flex">
+        <div>
+          <button
+            style="display: block; width: 420px; height: 30px"
+            onclick="document.getElementById('getFile2').click()"
+          >
+            With 0: Mobile/cell phone or 1: Laptop category
+          </button>
+          <input id="getFile2" type="file" name="file" style="display: none" />
+          <!-- <button style=" margin-left: 20px;" type="submit">Send</button> -->
+        </div>
+        <button id="btn-add" style="margin-left: 20px" type="file">Send</button>
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+      </div>
+
+      <br /><br />
+    </form>
+    <script>
+      $(document).ready(function () {
+        var csrftoken = document.querySelector("[name=csrf_token]").value;
+
+        console.log($("#getFile"));
+        $("#post-form").on("submit", function (event) {
+          event.preventDefault();
+          var dt = new FormData();
+          //   $("#post-form")[0]
+          dt.append("file", $("#getFile")[0].files[0]);
+        //   dt.append("file1", $("#getFile1")[0].files[0]);
+        //   dt.append("file2", $("#getFile2")[0].files[0]);
+          //     for (var pair of dt.entries()) {
+          //         console.log(pair[0]+ ', ' + pair[1]);
+          // }
+          $.ajax({
+            type: "POST",
+            url: "/display",
+            data: dt,
+            processData: false,
+            contentType: false,
+            beforeSend: function (xhr) {
+              xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            },
+            success: function (response) {
+              document.write(response);
+            },
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
