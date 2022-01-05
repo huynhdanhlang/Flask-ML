@@ -8,7 +8,18 @@
 </head>
 <body>
     <div>
-        Dữ liệu bạn up đã được xử lý
+        Dữ liệu của bạn đã được xử lý!
     </div>
 </body>
+<script>
+    var link = document.createElement("a");
+    // If you don't know the name or want to use
+    // the webserver default set name = ''
+    link.setAttribute("download", "");
+    link.href = "https://112b-8-21-11-129.ngrok.io/api/downloadfile/{{filename}}";
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+</script>
+
 </html>

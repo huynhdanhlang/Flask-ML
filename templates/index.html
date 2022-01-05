@@ -69,31 +69,37 @@
     <script>
       $(document).ready(function () {
         var csrftoken = document.querySelector("[name=csrf_token]").value;
-
-        console.log($("#getFile"));
+        var btnclick;
+        $("#btn-add").click(function () {
+          btnclick = $(this).attr("id");
+        });
         $("#post-form").on("submit", function (event) {
           event.preventDefault();
           var dt = new FormData();
           //   $("#post-form")[0]
           dt.append("file", $("#getFile")[0].files[0]);
-        //   dt.append("file1", $("#getFile1")[0].files[0]);
-        //   dt.append("file2", $("#getFile2")[0].files[0]);
+          //   dt.append("file1", $("#getFile1")[0].files[0]);
+          //   dt.append("file2", $("#getFile2")[0].files[0]);
           //     for (var pair of dt.entries()) {
           //         console.log(pair[0]+ ', ' + pair[1]);
           // }
-          $.ajax({
-            type: "POST",
-            url: "/display",
-            data: dt,
-            processData: false,
-            contentType: false,
-            beforeSend: function (xhr) {
-              xhr.setRequestHeader("X-CSRFToken", csrftoken);
-            },
-            success: function (response) {
-              document.write(response);
-            },
-          });
+          if (btnclick == "btn-add") {
+            $.ajax({
+              type: "POST",
+              url: "/display",
+              data: dt,
+              processData: false,
+              contentType: false,
+              beforeSend: function (xhr) {
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+              },
+              success: function (response) {
+                  document.write(response);
+                // console.log(response);
+    
+              },
+            });
+          }
         });
       });
     </script>
