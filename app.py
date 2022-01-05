@@ -1,19 +1,13 @@
 
-from flask import Flask, render_template, request,redirect
+from flask import Flask, render_template, request
 from werkzeug.utils import secure_filename
-from wtforms import FileField
 import pandas
-import numpy as np
-from sklearn.model_selection import train_test_split
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Embedding, RNN, Dense, LSTM, Bidirectional, SimpleRNN
+from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.preprocessing.sequence import pad_sequences
-from tensorflow.keras.layers import Flatten
-from tensorflow.keras.layers import Dense
+import pickle
 import os
 from flask_wtf.csrf import CSRFProtect
-import csv
 import requests
 
 path = os.getcwd()
